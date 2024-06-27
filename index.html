@@ -26,8 +26,8 @@
     <header>
         <div class="interface">
             <div class="logo">
-                <a href="#">
-                    <img src="logo.png" alt="Logo site">
+                <a href="#" style="display: block; text-align: center;">
+                    <img src="logo.png" alt="Logo site" style="border-radius: 10%; width: 200px; height: 200px;">
                 </a>
             </div><!--logo-->
 
@@ -148,22 +148,65 @@
                 <h2 class="titulo">MEU <span>PORTFÓLIO.</span></h2>
 
                 <div class="flex">
-                    <div class="img-port" style="background-image: url(REGK-1.png);">
-                        <div class="overlay">Projeto de chamada biométrico, em que o professor não precisa gritar o nome dos alunos. Projeto com kelvyn, Rose, Eduardo e Gustavo.</div>
-                    </div>
-                    <div class="img-port" style="background-image: url(projeto.png);">
-                        <div class="overlay">Futuramente...</div>
-                    </div>
-                    <div class="img-port" style="background-image: url(projeto.png);">
-                        <div class="overlay">Futuramente...</div>
-                    </div>
+                    <a href="link-do-seu-projeto1">
+                        <div class="img-port" style="background-image: url(projeto1.png);">
+                            <div class="overlay">JOGO DA VELHA FRONT-END</div>
+                        </div>
+                    </a>
+                    <a href="https://guilhermehenriquesfc.github.io/apicep/">
+                        <div class="img-port" style="background-image: url(projeto2.png);">
+                            <div class="overlay">LOCALIZADOR DE ENDEREÇO POR CEP COM API</div>
+                        </div>
+                    </a>
+                    <a href="https://guilhermehenriquesfc.github.io/ToDo-list-js/">
+                        <div class="img-port" style="background-image: url(projeto3.png);">
+                            <div class="overlay">TO-DO LIST FRONT-END</div>
+                        </div>
+                    </a>
                 </div><!--flex-->
                 <h2 class="titulo">PARA MAIS INFORMAÇÕES <span>ENTRAR EM CONTATO LOGO ABAIXO.</span></h2>
 
             </div><!--interface-->
         </section><!--portfolio-->
 
-
+        <section id="github-repos" class="github-repos">
+            <div class="interface">
+              <h2 class="titulo">MEUS <span>REPOSITÓRIOS NO GITHUB.</span></h2>
+          
+              <div class="repos-container">
+                </div><!-- repo-box -->
+              </div><!-- repos-container -->
+            </div><!-- interface -->
+          </section><!-- github-repos -->
+          
+          <style>
+            .repo-box {
+              width: calc(20% - 20px); /* Ajuste conforme necessário */
+              background-color: #f0f0f0;
+              padding: 20px;
+              margin-bottom: 20px;
+              border-radius: 8px;
+              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+              transition: transform 0.3s ease;
+            }
+          
+            .repo-box:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+          
+            .repo-name {
+              font-size: 18px;
+              font-weight: bold;
+              margin-bottom: 8px;
+            }
+          
+            .repo-description {
+              color: #666;
+              font-size: 14px;
+            }
+          </style>          
+          
         <section id="formulario" class="formulario">
             <div class="interface">
                 <h2 class="titulo">FALA <span>COMIGO.</span></h2>
