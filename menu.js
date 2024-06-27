@@ -1,35 +1,64 @@
-
-let btnMenu = document.getElementById('btn-menu')
-let menu = document.getElementById('menu-mobile')
-let overlay = document.getElementById('overlay-menu')
-
-btnMenu.addEventListener('click', () => {
-    menu.classList.add('abrir-menu')
-})
-
-menu.addEventListener('click', () => {
-    menu.classList.remove('abrir-menu')
-})
-
-overlay.addEventListener('click', () => {
-    menu.classList.remove('abrir-menu')
-})
 document.addEventListener("DOMContentLoaded", function () {
-    const linksMenu = document.querySelectorAll('header nav a');
+    const githubUsername = 'guilhermehenriqueSFC';
+    const repoCount = 5;
+    const accessToken = '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';
 
-    linksMenu.forEach(link => {
-        link.addEventListener('click', function (event) {
-            event.preventDefault();
+    const headers = {
+        'Authorization': `token ${accessToken}`
+    };
 
-            const targetId = this.getAttribute('href').substring(1);
-            const targetElement = document.getElementById(targetId);
+    fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=${repoCount}`, {
+        headers: headers
+    })
+        .then(response => response.json())
+        .then(repos => {
+            const reposContainer = document.querySelector('.repos-container');
 
-            const offsetTop = targetElement.offsetTop;
+            function fetchCommits(repo) {
+                return fetch(`https://api.github.com/repos/${githubUsername}/${repo.name}/commits`, {
+                    headers: headers
+                })
+                    .then(response => response.json())
+                    .then(commits => {
+                        return commits.length;
+                    })
+                    .catch(error => {
+                        console.error(`Erro ao carregar os commits do repositório ${repo.name}:`, error);
+                        return 0;
+                    });
+            }
 
-            window.scrollTo({
-                top: offsetTop,
-                behavior: 'smooth'
+            const commitPromises = [];
+
+            repos.forEach(repo => {
+                const repoBox = document.createElement('div');
+                repoBox.classList.add('repo-box');
+
+                repoBox.innerHTML = `
+          <h3 class="repo-name"><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+          <p class="repo-description">${repo.description || 'Sem descrição.'}</p>
+          <p class="repo-commits">Carregando...</p> <!-- Elemento para mostrar o número de commits -->
+        `;
+
+                reposContainer.appendChild(repoBox);
+
+                const commitPromise = fetchCommits(repo);
+                commitPromises.push(commitPromise);
+
+                commitPromise.then(numCommits => {
+                    const repoCommitsElement = repoBox.querySelector('.repo-commits');
+                    repoCommitsElement.textContent = `Commits: ${numCommits}`;
+                });
             });
-        });
-    });
+
+            Promise.all(commitPromises)
+                .then(() => {
+                    console.log('Todos os commits carregados.');
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar os commits:', error);
+                });
+
+        })
+        .catch(error => console.error('Erro ao carregar os repositórios do GitHub:', error));
 });
