@@ -23,7 +23,7 @@ body {
     padding: 10px 40px;
     font-size: 18px;
     font-weight: 600;
-    background-color: #941a8c;
+    background-color: #530f0a;
     border: 0;
     border-radius: 30px;
     cursor: pointer;
@@ -37,12 +37,12 @@ h2.titulo {
 }
 
 h2.titulo span {
-    color: #941a8c;
+    color: #530f0a;
 }
 
 button:hover,
 form .btn-enviar input:hover {
-    box-shadow: 0px 0px 8px #941a8c;
+    box-shadow: 0px 0px 8px #530f0a;
     transform: scale(1.05);
 }
 
@@ -82,7 +82,7 @@ header nav.menu-desktop ul li {
 }
 
 .btn-abrir-menu i {
-    color: #941a8c;
+    color: #530f0a;
     font-size: 40px;
 }
 
@@ -112,7 +112,7 @@ header nav.menu-desktop ul li {
 }
 
 .menu-mobile .btn-fechar i {
-    color: #941a8c;
+    color: #530f0a;
     font-size: 30px;
 }
 
@@ -129,7 +129,7 @@ header nav.menu-desktop ul li {
 }
 
 .menu-mobile nav ul li a:hover {
-    background-color: #941a8c;
+    background-color: #530f0a;
     color: #000;
 }
 
@@ -161,7 +161,7 @@ section.topo-do-site .flex {
 }
 
 .topo-do-site .txt-topo-site h1 span {
-    color: #941a8c;
+    color: #530f0a;
 }
 
 .topo-do-site .txt-topo-site p {
@@ -208,7 +208,7 @@ section.especiliadades .flex {
 
 .especiliadades .especialidades-box i {
     font-size: 70px;
-    color: #941a8c;
+    color: #530f0a;
 }
 
 .especiliadades .especialidades-box h3 {
@@ -236,7 +236,7 @@ section.sobre .flex {
 }
 
 .sobre .txt-sobre h2 span {
-    color: #941a8c;
+    color: #530f0a;
     display: block;
 }
 
@@ -250,7 +250,7 @@ section.sobre .flex {
     height: 60px;
     border-radius: 50%;
     border: none;
-    background-color: #941a8c;
+    background-color: #530f0a;
     font-size: 22px;
     cursor: pointer;
     margin: 0 5px;
@@ -342,7 +342,7 @@ form .btn-enviar {
 
 form .btn-enviar input {
     width: 120px;
-    background-color: #941a8c;
+    background-color: #530f0a;
     color: #000;
     font-weight: 700;
     cursor: pointer;
@@ -363,11 +363,11 @@ footer .line-footer {
 }
 
 .borda {
-    border-top: 2px solid #941a8c;
+    border-top: 2px solid #530f0a;
 }
 
 footer .line-footer p i {
-    color: #941a8c;
+    color: #530f0a;
     font-size: 22px;
 }
 
