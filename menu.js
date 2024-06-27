@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", async function () {
     const githubUsername = 'guilhermehenriqueSFC';
-    const repoCount = 5;
+    const repoCount = 10;
     const reposContainer = document.querySelector('#github-repos .repos-container');
 
     try {
@@ -43,6 +43,7 @@ document.addEventListener("DOMContentLoaded", async function () {
             <h3 class="repo-name"><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
             <p class="repo-description">${repo.description || 'Sem descrição.'}</p>
             <p class="repo-commits">Carregando...</p>
+            <a class="repo-button" href="${repo.html_url}" target="_blank">Ver Projeto</a>
         `;
         return box;
     }
