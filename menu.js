@@ -1,64 +1,58 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     const githubUsername = 'guilhermehenriqueSFC';
     const repoCount = 5;
-    const accessToken = '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';
+    const reposContainer = document.querySelector('#github-repos .repos-container');
 
-    const headers = {
-        'Authorization': `token ${accessToken}`
-    };
+    try {
+        const repos = await fetchRepos(githubUsername, repoCount);
 
-    fetch(`https://api.github.com/users/${githubUsername}/repos?sort=updated&per_page=${repoCount}`, {
-        headers: headers
-    })
-        .then(response => response.json())
-        .then(repos => {
-            const reposContainer = document.querySelector('.repos-container');
+        const commitPromises = repos.map(async repo => {
+            const repoBox = createRepoBox(repo);
+            reposContainer.appendChild(repoBox);
 
-            function fetchCommits(repo) {
-                return fetch(`https://api.github.com/repos/${githubUsername}/${repo.name}/commits`, {
-                    headers: headers
-                })
-                    .then(response => response.json())
-                    .then(commits => {
-                        return commits.length;
-                    })
-                    .catch(error => {
-                        console.error(`Erro ao carregar os commits do repositório ${repo.name}:`, error);
-                        return 0;
-                    });
+            try {
+                const numCommits = await fetchCommits(githubUsername, repo.name);
+                updateRepoCommits(repoBox, numCommits);
+            } catch (error) {
+                handleError(`Erro ao carregar os commits do repositório ${repo.name}:`, error);
+                updateRepoCommits(repoBox, 0);
             }
+        });
 
-            const commitPromises = [];
+        await Promise.all(commitPromises);
+        console.log('Todos os commits carregados.');
+    } catch (error) {
+        console.error('Erro ao carregar os repositórios do GitHub:', error);
+    }
 
-            repos.forEach(repo => {
-                const repoBox = document.createElement('div');
-                repoBox.classList.add('repo-box');
+    function fetchRepos(username, count) {
+        return fetch(`https://api.github.com/users/${username}/repos?sort=updated&per_page=${count}`)
+            .then(response => response.json());
+    }
 
-                repoBox.innerHTML = `
-          <h3 class="repo-name"><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
-          <p class="repo-description">${repo.description || 'Sem descrição.'}</p>
-          <p class="repo-commits">Carregando...</p> <!-- Elemento para mostrar o número de commits -->
+    function fetchCommits(username, repoName) {
+        return fetch(`https://api.github.com/repos/${username}/${repoName}/commits`)
+            .then(response => response.json())
+            .then(commits => commits.length);
+    }
+
+    function createRepoBox(repo) {
+        const box = document.createElement('div');
+        box.classList.add('repo-box');
+        box.innerHTML = `
+            <h3 class="repo-name"><a href="${repo.html_url}" target="_blank">${repo.name}</a></h3>
+            <p class="repo-description">${repo.description || 'Sem descrição.'}</p>
+            <p class="repo-commits">Carregando...</p>
         `;
+        return box;
+    }
 
-                reposContainer.appendChild(repoBox);
+    function updateRepoCommits(repoBox, numCommits) {
+        const commitsElement = repoBox.querySelector('.repo-commits');
+        commitsElement.textContent = `Commits: ${numCommits}`;
+    }
 
-                const commitPromise = fetchCommits(repo);
-                commitPromises.push(commitPromise);
-
-                commitPromise.then(numCommits => {
-                    const repoCommitsElement = repoBox.querySelector('.repo-commits');
-                    repoCommitsElement.textContent = `Commits: ${numCommits}`;
-                });
-            });
-
-            Promise.all(commitPromises)
-                .then(() => {
-                    console.log('Todos os commits carregados.');
-                })
-                .catch(error => {
-                    console.error('Erro ao carregar os commits:', error);
-                });
-
-        })
-        .catch(error => console.error('Erro ao carregar os repositórios do GitHub:', error));
+    function handleError(message, error) {
+        console.error(message, error);
+    }
 });
